@@ -1,0 +1,13 @@
+[Unit]
+Description = Anonymizing overlay network for TCP
+After = network.target
+[Service]
+Type = simple
+ExecStart = /usr/local/bin/tor -f /etc/tor/torrc --quiet
+ExecReload = /bin/kill -HUP ${MAINPID}
+ExecStop = /bin/kill -INT ${MAINPID}
+TimeoutSec = 30
+Restart = on-failure
+LimitNOFILE = 4096
+[Install]
+WantedBy = multi-user.target
